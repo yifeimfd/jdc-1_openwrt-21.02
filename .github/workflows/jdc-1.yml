@@ -16,8 +16,8 @@ on:
 #     - openwrt-21.02
 #   paths:
 #     - 'Lean'
-   schedule:
-     - cron: 0 18 * * 1
+#   schedule:
+#     - cron: 0 18 * * 1
    watch:
      types: started
   
