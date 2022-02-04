@@ -24,8 +24,10 @@ on:
 env:
   REPO_URL: https://github.com/openwrt/openwrt
   REPO_BRANCH: openwrt-21.02
-  CONFIG_FILE: config-jdc1-op21.02
-  DIY_SH: diy-jdc1-op21.02.sh
+  CONFIG_FILE1: config-jdc1-op21.02
+  DIY_SH1: diy-jdc1-op21.02.sh
+  CONFIG_FILE: config-x86-Lienol
+  DIY_SH: diy-x86-Lienol.sh
   SSH_ACTIONS:  true
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
@@ -57,8 +59,12 @@ jobs:
     - name: 导入自定义
       run: |
         git clone https://github.com/yifeimfd/Actions-OpenWrt-en_ssh ./openwrt/diy/yifeimfd
+        mv ./openwrt/diy/yifeimfd/diy/$CONFIG_FILE $(pwd)
+        mv ./openwrt/diy/yifeimfd/diy/$DIY_SH $(pwd)
         df -h && pwd
         [ -e files ] && mv files openwrt/files
+        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        chmod +x $DIY_SH && cd openwrt && ../$DIY_SH
 
     - name: SSH连接
       uses: yifeimfd/debugger-action@master
