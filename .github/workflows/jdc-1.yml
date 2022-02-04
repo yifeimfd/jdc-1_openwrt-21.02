@@ -25,7 +25,7 @@ env:
   REPO_URL: https://github.com/openwrt/openwrt
   REPO_BRANCH: openwrt-21.02
   CONFIG_FILE: config-jdc1-op21.02
-  #DIY_SH: diy-x86-Lean.sh
+  DIY_SH: diy-jdc1-op21.02.sh
   SSH_ACTIONS:  true
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
@@ -57,9 +57,8 @@ jobs:
     - name: 导入自定义
       run: |
         git clone https://github.com/yifeimfd/Actions-OpenWrt-en_ssh ./openwrt/diy/yifeimfd
-        mv ./openwrt/diy/yifeimfd/diy/$
-        $(pwd)
-###       mv ./openwrt/diy/yifeimfd/diy/$DIY_SH $(pwd)
+        mv ./openwrt/diy/yifeimfd/diy/$CONFIG_FILE $(pwd)
+###        mv ./openwrt/diy/yifeimfd/diy/$DIY_SH $(pwd)
         df -h && pwd
         [ -e target ] && cp -a target openwrt/
         [ -e files ] && mv files openwrt/files
