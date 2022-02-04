@@ -16,10 +16,10 @@ on:
 #     - openwrt-21.02
 #   paths:
 #     - 'Lean'
-   schedule:
-     - cron: 0 18 * * *
-#   watch:
-#     types: started
+#   schedule:
+#     - cron: 0 18 * * *
+   watch:
+     types: started
   
 env:
   REPO_URL: https://github.com/openwrt/openwrt
