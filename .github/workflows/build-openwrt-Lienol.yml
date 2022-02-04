@@ -16,10 +16,10 @@ on:
 #     - master
 #   paths:
 #     - 'Lienol'
-   schedule:
-     - cron: 0 20 * * *
-   watch:
-     types: started
+#   schedule:
+#     - cron: 0 20 * * *
+#   watch:
+#     types: started
   
 env:
   REPO_URL: https://github.com/Lienol/openwrt
