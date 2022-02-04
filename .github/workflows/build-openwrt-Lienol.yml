@@ -18,15 +18,15 @@ on:
 #     - 'Lienol'
 #   schedule:
 #     - cron: 0 20 * * *
-#   watch:
-#     types: started
+   watch:
+     types: started
   
 env:
   REPO_URL: https://github.com/Lienol/openwrt
-  REPO_BRANCH: 19.07
+  REPO_BRANCH: 21.02
   CONFIG_FILE: config-x86-Lienol
   DIY_SH: diy-x86-Lienol.sh
-  SSH_ACTIONS: false
+  SSH_ACTIONS: true
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
   TZ: Asia/Shanghai
