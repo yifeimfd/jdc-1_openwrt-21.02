@@ -6,14 +6,14 @@
 # Blog: https://p3terx.com
 #=================================================
 
-name: build-openwrt-Lean
+name: build-openwrt-21.02
 
 on:
 # release:
 #   types: published
 # push:
 #   branches:
-#     - master
+#     - openwrt-21.02
 #   paths:
 #     - 'Lean'
    schedule:
@@ -22,8 +22,8 @@ on:
 #     types: started
   
 env:
-  REPO_URL: https://github.com/coolsnowwolf/lede
-  REPO_BRANCH: master
+  REPO_URL: https://github.com/openwrt/openwrt
+  REPO_BRANCH: openwrt-21.02
   CONFIG_FILE: config-x86-Lean
   DIY_SH: diy-x86-Lean.sh
   SSH_ACTIONS:  false
@@ -56,15 +56,15 @@ jobs:
    
     - name: 导入自定义
       run: |
-        git clone https://github.com/sypopo/diy ./openwrt/diy/sypopo
-        mv ./openwrt/diy/sypopo/$CONFIG_FILE $(pwd)
-        mv ./openwrt/diy/sypopo/$DIY_SH $(pwd)
+        git clone https://github.com/yifeimfd/Actions-OpenWrt-en_ssh ./openwrt/diy/yifeimfd
+        mv ./openwrt/diy/yifeimfd/diy/$CONFIG_FILE $(pwd)
+        mv ./openwrt/diy/yifeimfd/diy/$DIY_SH $(pwd)
         df -h && pwd
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         chmod +x $DIY_SH && cd openwrt && ../$DIY_SH
     - name: SSH连接
-      uses: sypopo/debugger-action@master
+      uses: yifeimfd/debugger-action@master
       if: env.SSH_ACTIONS == 'true'
         
     - name: 下载软件包
@@ -112,5 +112,5 @@ jobs:
       uses: actions/upload-artifact@master
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
-        name: OpenWrt-x86-Lean
+        name: OpenWrt-x86-21.02
         path: ${{ env.FIRMWARE }}
