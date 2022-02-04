@@ -57,13 +57,11 @@ jobs:
     - name: 导入自定义
       run: |
         git clone https://github.com/yifeimfd/Actions-OpenWrt-en_ssh ./openwrt/diy/yifeimfd
-        mv ./openwrt/diy/yifeimfd/diy/$CONFIG_FILE $(pwd)
-###        mv ./openwrt/diy/yifeimfd/diy/$DIY_SH $(pwd)
         df -h && pwd
         [ -e target ] && cp -a target openwrt/
         [ -e files ] && mv files openwrt/files
-        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-###        chmod +x $DIY_SH && cd openwrt && ../$DIY_SH
+        [ -e ./openwrt/diy/yifeimfd/diy/$CONFIG_FILE ] && mv ./openwrt/diy/yifeimfd/diy/$CONFIG_FILE $(pwd) openwrt/.config
+        [ -e ./openwrt/diy/yifeimfd/diy/$DIY_SH ] && mv ./openwrt/diy/yifeimfd/diy/$DIY_SH $(pwd) && chmod +x $DIY_SH && cd openwrt && ../$DIY_SH
     - name: SSH连接
       uses: yifeimfd/debugger-action@master
       if: env.SSH_ACTIONS == 'true'
