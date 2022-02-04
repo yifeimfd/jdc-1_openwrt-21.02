@@ -16,8 +16,8 @@ on:
 #     - openwrt-21.02
 #   paths:
 #     - 'Lean'
-#   schedule:
-#     - cron: 0 18 * * *
+   schedule:
+     - cron: 0 18 * * 1
    watch:
      types: started
   
@@ -60,6 +60,9 @@ jobs:
         df -h && pwd
         [ -e target ] && cp -a target openwrt/
         [ -e files ] && mv files openwrt/files
+        [ -e ./openwrt/diy/yifeimfd/diy/$CONFIG_FILE ] && mv ./openwrt/diy/yifeimfd/diy/$CONFIG_FILE $(pwd) openwrt/.config
+        [ -e ./openwrt/diy/yifeimfd/diy/$DIY_SH ] && mv ./openwrt/diy/yifeimfd/diy/$DIY_SH $(pwd) && chmod +x $DIY_SH && cd openwrt && ../$DIY_SH
+
     - name: SSH连接
       uses: yifeimfd/debugger-action@master
       if: env.SSH_ACTIONS == 'true'
@@ -105,6 +108,7 @@ jobs:
         rm -rf packages *rootfs* *vmlinuz *info *fest
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
+
     - name: 上传固件
       uses: actions/upload-artifact@master
       if: steps.organize.outputs.status == 'success' && !cancelled()
