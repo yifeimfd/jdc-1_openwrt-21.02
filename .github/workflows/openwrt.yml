@@ -65,7 +65,6 @@ jobs:
         chmod +x $DIY_SH && cd openwrt && ../$DIY_SH
     - name: SSH连接
       uses: yifeimfd/debugger-action@master
-#      if: env.SSH_ACTIONS == 'true'
         
     - name: 下载软件包
       id: package
