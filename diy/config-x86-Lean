@@ -1,0 +1,76 @@
+CONFIG_TARGET_x86=y
+CONFIG_TARGET_x86_64=y
+CONFIG_TARGET_x86_64_DEVICE_generic=y
+CONFIG_ARIA2_BITTORRENT=y
+CONFIG_ARIA2_NOXML=y
+CONFIG_ARIA2_OPENSSL=y
+CONFIG_ARIA2_WEBSOCKET=y
+# CONFIG_PACKAGE_UnblockNeteaseMusic is not set
+# CONFIG_PACKAGE_UnblockNeteaseMusic-Go is not set
+# CONFIG_PACKAGE_adbyby is not set
+CONFIG_PACKAGE_aria2=y
+CONFIG_PACKAGE_ariang=y
+CONFIG_PACKAGE_blkid=y
+CONFIG_PACKAGE_btrfs-progs=y
+# CONFIG_PACKAGE_etherwake is not set
+CONFIG_PACKAGE_frpc=y
+CONFIG_PACKAGE_frps=y
+CONFIG_PACKAGE_iputils-arping=y
+CONFIG_PACKAGE_jq=y
+CONFIG_PACKAGE_kmod-crypto-md4=y
+CONFIG_PACKAGE_kmod-crypto-sha512=y
+CONFIG_PACKAGE_kmod-fs-btrfs=y
+CONFIG_PACKAGE_kmod-fs-cifs=y
+CONFIG_PACKAGE_kmod-gre=y
+CONFIG_PACKAGE_kmod-iptunnel=y
+CONFIG_PACKAGE_kmod-lib-lzo=y
+CONFIG_PACKAGE_kmod-lib-raid6=y
+CONFIG_PACKAGE_kmod-lib-xor=y
+CONFIG_PACKAGE_kmod-lib-zstd=y
+# CONFIG_PACKAGE_libatomic is not set
+CONFIG_PACKAGE_libattr=y
+CONFIG_PACKAGE_liblzo=y
+# CONFIG_PACKAGE_libnghttp2 is not set
+CONFIG_PACKAGE_lsblk=y
+# CONFIG_PACKAGE_luci-app-accesscontrol is not set
+# CONFIG_PACKAGE_luci-app-adbyby-plus is not set
+CONFIG_PACKAGE_luci-app-aria2=y
+CONFIG_PACKAGE_luci-app-cifs-mount=y
+# CONFIG_PACKAGE_luci-app-ddns is not set
+CONFIG_PACKAGE_luci-app-diskman=y
+CONFIG_PACKAGE_luci-app-frpc=y
+CONFIG_PACKAGE_luci-app-frps=y
+CONFIG_PACKAGE_luci-app-pptp-server=y
+# CONFIG_PACKAGE_luci-app-qbittorrent is not set
+CONFIG_PACKAGE_luci-app-serverchan=y
+# CONFIG_PACKAGE_luci-app-unblockmusic is not set
+# CONFIG_PACKAGE_luci-app-uugamebooster is not set
+CONFIG_PACKAGE_luci-app-v2ray-server=y
+# CONFIG_PACKAGE_luci-app-vsftpd is not set
+CONFIG_PACKAGE_luci-app-webadmin=y
+# CONFIG_PACKAGE_luci-app-wol is not set
+# CONFIG_PACKAGE_luci-app-xlnetacc is not set
+CONFIG_PACKAGE_luci-i18n-aria2-zh-cn=y
+CONFIG_PACKAGE_luci-i18n-cifs-mount-zh-cn=y
+CONFIG_PACKAGE_luci-i18n-diskman-zh-cn=y
+CONFIG_PACKAGE_luci-i18n-frpc-zh-cn=y
+CONFIG_PACKAGE_luci-i18n-frps-zh-cn=y
+CONFIG_PACKAGE_luci-i18n-pptp-server-zh-cn=y
+CONFIG_PACKAGE_luci-i18n-v2ray-server-zh-cn=y
+CONFIG_PACKAGE_luci-i18n-webadmin-zh-cn=y
+CONFIG_PACKAGE_luci-theme-argon_new=y
+CONFIG_PACKAGE_luci-theme-opentomato=y
+# CONFIG_PACKAGE_node is not set
+CONFIG_PACKAGE_parted=y
+CONFIG_PACKAGE_pptpd=y
+# CONFIG_PACKAGE_qBittorrent-static is not set
+CONFIG_PACKAGE_smartmontools=y
+CONFIG_PACKAGE_unzip=y
+# CONFIG_PACKAGE_uugamebooster is not set
+# CONFIG_PACKAGE_vsftpd-alt is not set
+# CONFIG_PACKAGE_wol is not set
+CONFIG_PARTED_READLINE=y
+CONFIG_TARGET_IMAGES_GZIP=y
+CONFIG_TARGET_KERNEL_PARTSIZE=256
+CONFIG_TARGET_ROOTFS_PARTSIZE=512
+# CONFIG_VMDK_IMAGES is not set
