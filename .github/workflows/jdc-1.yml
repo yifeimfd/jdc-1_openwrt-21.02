@@ -26,7 +26,7 @@ env:
   REPO_BRANCH: openwrt-21.02
   CONFIG_FILE: config-21.02.jdc-1
   DIY_SH: diy-x86-Lienol.sh
-  SSH_ACTIONS:  true
+  SSH_ACTIONS:  false
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
   TZ: Asia/Shanghai
@@ -104,8 +104,9 @@ jobs:
       id: organize
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-        cp openwrt/.config  openwrt/bin/targets/x86/64/config.txt
-        tar -czf bin.tar.gz openwrt/bin && cp -vf bin.tar.gz openwrt/bin/targets/x86/64
+#        cp openwrt/.config  openwrt/bin/targets/x86/64/config.txt
+        ls -alr openwrt/bin/targets/
+#        tar -czf bin.tar.gz openwrt/bin && cp -vf bin.tar.gz openwrt/bin/targets/x86/64
         cd openwrt/bin/targets/*/*
         rm -rf packages *rootfs* *vmlinuz *info *fest
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
