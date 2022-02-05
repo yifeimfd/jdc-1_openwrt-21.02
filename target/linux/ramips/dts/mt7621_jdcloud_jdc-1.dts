@@ -82,19 +82,19 @@
                                 reg = <0x50000 0x1aa0000>;
                         };
 
-                        partition@30000 {
+                        partition@1af0000 {
                                 label = "backup";
                                 reg = <0x1af0000 0x10000>;
                                 read-only;
                         };
 
-                        partition@30000 {
+                        partition@1b00000 {
                                 label = "mini";
                                 reg = <0x1b00000 0x400000>;
                                 read-only;
                         };
 
-                        partition@30000 {
+                        partition@1f00000{
                                 label = "oem";
                                 reg = <0x1f00000 0x100000>;
                                 read-only;
