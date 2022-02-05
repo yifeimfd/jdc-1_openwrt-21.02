@@ -81,8 +81,7 @@ jobs:
       id: compile
       run: |
         cd openwrt
-        echo -e "$(nproc) thread compile"
-        make -j$(nproc) || make
+        make
         echo "::set-output name=status::success"
         echo "======================="
         echo "Space usage:"
