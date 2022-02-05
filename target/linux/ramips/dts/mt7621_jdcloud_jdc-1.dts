@@ -86,16 +86,19 @@
                                 label = "backup";
                                 reg = <0x1af0000 0x10000>;
                                 read-only;
+                        };
 
                         partition@30000 {
                                 label = "mini";
                                 reg = <0x1b00000 0x400000>;
                                 read-only;
+                        };
 
                         partition@30000 {
                                 label = "oem";
                                 reg = <0x1f00000 0x100000>;
                                 read-only;
+                        };
                 };
         };
 };
