@@ -112,7 +112,7 @@
 };
 
 &gmac0 {
-        mtd-mac-address = <&factory 0xe000>;
+        mtd-mac-address = <&config 0x4429>;
 };
 
 &switch0 {
@@ -130,7 +130,7 @@
                 port@3 {
                         status = "okay";
                         label = "wan";
-                        mtd-mac-address = <&factory 0xe006>;
+                        mtd-mac-address = <&config 0x4429>;
                 };
         };
 };
