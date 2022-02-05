@@ -59,6 +59,8 @@ jobs:
         git clone https://github.com/yifeimfd/Actions-OpenWrt-en_ssh ./openwrt/diy/yifeimfd
         mv ./openwrt/diy/yifeimfd/diy/$CONFIG_FILE $(pwd)
         mv ./openwrt/diy/yifeimfd/diy/$DIY_SH $(pwd)
+        cp -a ./openwrt/target openwrt
+        grep -irl jdc openwrt/target
         df -h && pwd
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
