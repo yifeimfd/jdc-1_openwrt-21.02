@@ -26,7 +26,7 @@ env:
   REPO_BRANCH: 21.02
   CONFIG_FILE: config-x86-Lienol
   DIY_SH: diy-x86-Lienol.sh
-  SSH_ACTIONS: true
+  SSH_ACTIONS: false
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
   TZ: Asia/Shanghai
