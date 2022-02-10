@@ -1,0 +1,614 @@
+/dts-v1/;
+
+/ {
+	compatible = "jdcloud,re-sp-01b\0mediatek,mt7621-soc";
+	model = "JDCloud RE-SP-01B";
+	#address-cells = <0x01>;
+	#size-cells = <0x01>;
+
+	palmbus@1E000000 {
+		compatible = "palmbus";
+		ranges = <0x00 0x1e000000 0xfffff>;
+		#address-cells = <0x01>;
+		#size-cells = <0x01>;
+		reg = <0x1e000000 0x100000>;
+
+		sysc@0 {
+			compatible = "mtk,mt7621-sysc";
+			reg = <0x00 0x100>;
+		};
+
+		wdt@100 {
+			compatible = "mediatek,mt7621-wdt";
+			reg = <0x100 0x100>;
+		};
+
+		systick@500 {
+			compatible = "ralink,mt7621-systick\0ralink,cevt-systick";
+			resets = <0x03 0x1c>;
+			interrupt-parent = <0x01>;
+			interrupts = <0x00 0x05 0x04>;
+			reg = <0x500 0x10>;
+			reset-names = "intc";
+		};
+
+		mc@1fbf8000 {
+			compatible = "mtk,mt7621-mc";
+			reg = <0x1fbf8000 0x8000>;
+		};
+
+		i2c@900 {
+			compatible = "mediatek,mt7621-i2c";
+			clocks = <0x02>;
+			resets = <0x03 0x10>;
+			status = "disabled";
+			#address-cells = <0x01>;
+			#size-cells = <0x00>;
+			reg = <0x900 0x100>;
+			pinctrl-0 = <0x04>;
+			reset-names = "i2c";
+			pinctrl-names = "default";
+		};
+
+		uartlite3@e00 {
+			reg-io-width = <0x04>;
+			compatible = "ns16550a";
+			status = "disabled";
+			interrupt-parent = <0x01>;
+			interrupts = <0x00 0x1c 0x04>;
+			reg = <0xe00 0x100>;
+			clock-frequency = <0x2faf080>;
+			pinctrl-0 = <0x07>;
+			reg-shift = <0x02>;
+			pinctrl-names = "default";
+		};
+
+		uartlite2@d00 {
+			reg-io-width = <0x04>;
+			compatible = "ns16550a";
+			status = "disabled";
+			interrupt-parent = <0x01>;
+			interrupts = <0x00 0x1b 0x04>;
+			reg = <0xd00 0x100>;
+			clock-frequency = <0x2faf080>;
+			pinctrl-0 = <0x06>;
+			reg-shift = <0x02>;
+			pinctrl-names = "default";
+		};
+
+		gpio@600 {
+			compatible = "mtk,mt7621-gpio";
+			interrupt-parent = <0x01>;
+			#address-cells = <0x01>;
+			interrupts = <0x00 0x0c 0x04>;
+			#size-cells = <0x00>;
+			reg = <0x600 0x100>;
+
+			bank@1 {
+				compatible = "mtk,mt7621-gpio-bank";
+				gpio-controller;
+				reg = <0x01>;
+				#gpio-cells = <0x02>;
+			};
+
+			bank@2 {
+				compatible = "mtk,mt7621-gpio-bank";
+				gpio-controller;
+				reg = <0x02>;
+				#gpio-cells = <0x02>;
+			};
+
+			bank@0 {
+				compatible = "mtk,mt7621-gpio-bank";
+				gpio-controller;
+				phandle = <0x11>;
+				reg = <0x00>;
+				#gpio-cells = <0x02>;
+				linux,phandle = <0x11>;
+			};
+		};
+
+		hsdma@7000 {
+			#dma-cells = <0x01>;
+			compatible = "mediatek,mt7621-hsdma";
+			resets = <0x03 0x05>;
+			#dma-requests = <0x01>;
+			status = "disabled";
+			interrupt-parent = <0x01>;
+			interrupts = <0x00 0x0b 0x04>;
+			reg = <0x7000 0x1000>;
+			reset-names = "hsdma";
+			#dma-channels = <0x01>;
+		};
+
+		memc@5000 {
+			compatible = "mtk,mt7621-memc";
+			reg = <0x5000 0x1000>;
+		};
+
+		uartlite@c00 {
+			reg-io-width = <0x04>;
+			compatible = "ns16550a";
+			interrupt-parent = <0x01>;
+			interrupts = <0x00 0x1a 0x04>;
+			reg = <0xc00 0x100>;
+			clock-frequency = <0x2faf080>;
+			reg-shift = <0x02>;
+			no-loopback-test;
+		};
+
+		spi@b00 {
+			compatible = "ralink,mt7621-spi";
+			clocks = <0x08 0x01>;
+			resets = <0x03 0x12>;
+			status = "okay";
+			#address-cells = <0x01>;
+			#size-cells = <0x00>;
+			reg = <0xb00 0x100>;
+			pinctrl-0 = <0x09>;
+			reset-names = "spi";
+			pinctrl-names = "default";
+
+			flash@0 {
+				compatible = "jedec,spi-nor";
+				reg = <0x00>;
+				spi-max-frequency = <0x2faf080>;
+
+				partitions {
+					compatible = "fixed-partitions";
+					#address-cells = <0x01>;
+					#size-cells = <0x01>;
+
+					partition@0 {
+						read-only;
+						label = "u-boot";
+						reg = <0x00 0x30000>;
+					};
+
+					partition@1b00000 {
+						read-only;
+						label = "mini";
+						reg = <0x1b00000 0x400000>;
+					};
+
+					partition@30000 {
+						read-only;
+						label = "config";
+						phandle = <0x0d>;
+						reg = <0x30000 0x10000>;
+						linux,phandle = <0x0d>;
+					};
+
+					partition@40000 {
+						read-only;
+						label = "factory";
+						phandle = <0x10>;
+						reg = <0x40000 0x10000>;
+						linux,phandle = <0x10>;
+					};
+
+					partition@1f00000 {
+						read-only;
+						label = "oem";
+						reg = <0x1f00000 0x100000>;
+					};
+
+					partition@50000 {
+						compatible = "denx,uimage";
+						label = "firmware";
+						reg = <0x50000 0x1ab0000>;
+					};
+				};
+			};
+		};
+
+		i2s@a00 {
+			compatible = "mediatek,mt7621-i2s";
+			clocks = <0x02>;
+			resets = <0x03 0x11>;
+			txdma-req = <0x02>;
+			status = "disabled";
+			interrupt-parent = <0x01>;
+			interrupts = <0x00 0x10 0x04>;
+			dma-names = "tx\0rx";
+			rxdma-req = <0x03>;
+			reg = <0xa00 0x100>;
+			dmas = <0x05 0x04 0x05 0x06>;
+			reset-names = "i2s";
+		};
+
+		gdma@2800 {
+			#dma-cells = <0x01>;
+			compatible = "ralink,rt3883-gdma";
+			resets = <0x03 0x0e>;
+			#dma-requests = <0x10>;
+			status = "disabled";
+			interrupt-parent = <0x01>;
+			interrupts = <0x00 0x0d 0x04>;
+			phandle = <0x05>;
+			reg = <0x2800 0x800>;
+			reset-names = "dma";
+			linux,phandle = <0x05>;
+			#dma-channels = <0x10>;
+		};
+
+		cpc@1fbf0000 {
+			compatible = "mtk,mt7621-cpc";
+			reg = <0x1fbf0000 0x8000>;
+		};
+	};
+
+	nand@1e003000 {
+		compatible = "mtk,mt7621-nand";
+		status = "disabled";
+		bank-width = <0x02>;
+		reg = <0x1e003000 0x800 0x1e003800 0x800>;
+	};
+
+	sdhci@1E130000 {
+		compatible = "ralink,mt7620-sdhci";
+		status = "okay";
+		interrupt-parent = <0x01>;
+		interrupts = <0x00 0x14 0x04>;
+		reg = <0x1e130000 0x4000>;
+		pinctrl-0 = <0x0b>;
+		pinctrl-names = "default";
+	};
+
+	ethernet@1e100000 {
+		compatible = "mediatek,mt7621-eth";
+		mac-address = [dc d8 7c 0c e0 e5];
+		resets = <0x03 0x06 0x03 0x17>;
+		mtd-mac-address-ascii = <0x0d 0x4429>;
+		mediatek,switch = <0x0c>;
+		interrupt-parent = <0x01>;
+		#address-cells = <0x01>;
+		interrupts = <0x00 0x03 0x04>;
+		#size-cells = <0x01>;
+		reg = <0x1e100000 0x10000>;
+		reset-names = "fe\0eth";
+
+		mdio-bus {
+			#address-cells = <0x01>;
+			#size-cells = <0x00>;
+
+			ethernet-phy@1f {
+				reg = <0x1f>;
+				phy-mode = "rgmii";
+			};
+		};
+
+		hnat@0 {
+			compatible = "mediatek,mt7623-hnat";
+			resets = <0x03 0x00>;
+			mtketh-lan = "eth0";
+			mtketh-ppd = "eth0";
+			mtketh-wan = "eth0";
+			reg = <0x00 0x10000>;
+			reset-names = "mtketh";
+		};
+	};
+
+	sysclock {
+		compatible = "fixed-clock";
+		#clock-cells = <0x00>;
+		phandle = <0x02>;
+		clock-frequency = <0x2faf080>;
+		linux,phandle = <0x02>;
+	};
+
+	clkctrl {
+		compatible = "ralink,rt2880-clock";
+		#clock-cells = <0x01>;
+		phandle = <0x0f>;
+		linux,phandle = <0x0f>;
+	};
+
+	cpuintc {
+		compatible = "mti,cpu-interrupt-controller";
+		#interrupt-cells = <0x01>;
+		#address-cells = <0x00>;
+		interrupt-controller;
+	};
+
+	pcie@1e140000 {
+		compatible = "mediatek,mt7621-pci";
+		clocks = <0x0f 0x18 0x0f 0x19 0x0f 0x1a>;
+		resets = <0x03 0x18 0x03 0x19 0x03 0x1a>;
+		device_type = "pci";
+		clock-names = "pcie0\0pcie1\0pcie2";
+		ranges = <0x2000000 0x00 0x00 0x60000000 0x00 0x10000000 0x1000000 0x00 0x00 0x1e160000 0x00 0x10000>;
+		status = "okay";
+		bus-range = <0x00 0xff>;
+		interrupt-parent = <0x01>;
+		#address-cells = <0x03>;
+		interrupts = <0x00 0x04 0x04 0x00 0x18 0x04 0x00 0x19 0x04>;
+		#size-cells = <0x02>;
+		reg = <0x1e140000 0x100 0x1e142000 0x100>;
+		pinctrl-0 = <0x0e>;
+		reset-names = "pcie0\0pcie1\0pcie2";
+		pinctrl-names = "default";
+
+		pcie@0,0 {
+			ranges;
+			#address-cells = <0x03>;
+			#size-cells = <0x02>;
+			reg = <0x00 0x00 0x00 0x00 0x00>;
+
+			wifi@0,0 {
+				mac-address = [dc d8 7c 0c e0 e5];
+				mtd-mac-address-ascii = <0x0d 0x4429>;
+				reg = <0x00 0x00 0x00 0x00 0x00>;
+				mediatek,mtd-eeprom = <0x10 0x00>;
+			};
+		};
+
+		pcie@2,0 {
+			ranges;
+			#address-cells = <0x03>;
+			#size-cells = <0x02>;
+			reg = <0x1000 0x00 0x00 0x00 0x00>;
+		};
+
+		pcie@1,0 {
+			ranges;
+			#address-cells = <0x03>;
+			#size-cells = <0x02>;
+			reg = <0x800 0x00 0x00 0x00 0x00>;
+
+			wifi@0,0 {
+				mac-address = [dc d8 7c 8c e0 e5];
+				mtd-mac-address-ascii = <0x0d 0x4429>;
+				mtd-mac-address-increment-byte = <0x03>;
+				mtd-mac-address-increment = <0x80>;
+				reg = <0x00 0x00 0x00 0x00 0x00>;
+				mediatek,mtd-eeprom = <0x10 0x8000>;
+				ieee80211-freq-limit = <0x4c4b40 0x5b8d80>;
+			};
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		green {
+			gpios = <0x11 0x08 0x01>;
+			label = "jdcloud:green:sys";
+		};
+
+		red {
+			gpios = <0x11 0x06 0x01>;
+			label = "jdcloud:red:sys";
+			panic-indicator;
+		};
+
+		blue {
+			gpios = <0x11 0x0c 0x01>;
+			label = "jdcloud:blue:sys";
+		};
+	};
+
+	pll {
+		compatible = "mediatek,mt7621-pll\0syscon";
+		#clock-cells = <0x01>;
+		phandle = <0x08>;
+		clock-output-names = "cpu\0bus";
+		linux,phandle = <0x08>;
+	};
+
+	aliases {
+		led-boot = "/leds/red";
+		led-running = "/leds/green";
+		led-upgrade = "/leds/blue";
+		label-mac-device = "/ethernet@1e100000";
+		led-failsafe = "/leds/red";
+		serial0 = "/palmbus@1E000000/uartlite@c00";
+	};
+
+	chosen {
+		bootargs = "console=ttyS0,115200";
+	};
+
+	keys {
+		compatible = "gpio-keys";
+
+		reset {
+			gpios = <0x11 0x12 0x01>;
+			label = "reset";
+			linux,code = <0x198>;
+		};
+	};
+
+	gsw@1e110000 {
+		compatible = "mediatek,mt7621-gsw";
+		interrupt-parent = <0x01>;
+		interrupts = <0x00 0x17 0x04>;
+		phandle = <0x0c>;
+		reg = <0x1e110000 0x8000>;
+		linux,phandle = <0x0c>;
+	};
+
+	xhci@1E1C0000 {
+		compatible = "mediatek,mt8173-xhci";
+		clocks = <0x02>;
+		reg-names = "mac\0ippc";
+		clock-names = "sys_ck";
+		status = "okay";
+		interrupt-parent = <0x01>;
+		#address-cells = <0x01>;
+		interrupts = <0x00 0x16 0x04>;
+		#size-cells = <0x00>;
+		reg = <0x1e1c0000 0x1000 0x1e1d0700 0x100>;
+
+		port@1 {
+			#trigger-source-cells = <0x00>;
+			reg = <0x01>;
+		};
+
+		port@2 {
+			#trigger-source-cells = <0x00>;
+			reg = <0x02>;
+		};
+	};
+
+	interrupt-controller@1fbc0000 {
+		compatible = "mti,gic";
+		#interrupt-cells = <0x03>;
+		mti,reserved-cpu-vectors = <0x07>;
+		phandle = <0x01>;
+		reg = <0x1fbc0000 0x2000>;
+		linux,phandle = <0x01>;
+		interrupt-controller;
+
+		timer {
+			compatible = "mti,gic-timer";
+			clocks = <0x08 0x00>;
+			interrupts = <0x01 0x01 0x00>;
+		};
+	};
+
+	cpus {
+		#address-cells = <0x01>;
+		#size-cells = <0x00>;
+
+		cpu@1 {
+			compatible = "mips,mips1004Kc";
+			device_type = "cpu";
+			reg = <0x01>;
+		};
+
+		cpu@0 {
+			compatible = "mips,mips1004Kc";
+			device_type = "cpu";
+			reg = <0x00>;
+		};
+	};
+
+	rstctrl {
+		compatible = "ralink,rt2880-reset";
+		#reset-cells = <0x01>;
+		phandle = <0x03>;
+		linux,phandle = <0x03>;
+	};
+
+	pinctrl {
+		compatible = "ralink,rt2880-pinmux";
+		pinctrl-0 = <0x0a>;
+		pinctrl-names = "default";
+
+		mdio {
+
+			mdio {
+				ralink,group = "mdio";
+				ralink,function = "mdio";
+			};
+		};
+
+		rgmii1 {
+
+			rgmii1 {
+				ralink,group = "rgmii1";
+				ralink,function = "rgmii1";
+			};
+		};
+
+		sdhci {
+			phandle = <0x0b>;
+			linux,phandle = <0x0b>;
+
+			sdhci {
+				ralink,group = "sdhci";
+				ralink,function = "sdhci";
+			};
+		};
+
+		spi_pins {
+			phandle = <0x09>;
+			linux,phandle = <0x09>;
+
+			spi_pins {
+				ralink,group = "spi";
+				ralink,function = "spi";
+			};
+		};
+
+		uart2 {
+			phandle = <0x06>;
+			linux,phandle = <0x06>;
+
+			uart2 {
+				ralink,group = "uart2";
+				ralink,function = "uart2";
+			};
+		};
+
+		nand {
+
+			sdhci-nand {
+				ralink,group = "sdhci";
+				ralink,function = "nand2";
+			};
+
+			spi-nand {
+				ralink,group = "spi";
+				ralink,function = "nand1";
+			};
+		};
+
+		pinctrl0 {
+			phandle = <0x0a>;
+			linux,phandle = <0x0a>;
+
+			gpio {
+				ralink,group = "uart2\0uart3\0wdt";
+				ralink,function = "gpio";
+			};
+		};
+
+		pcie {
+			phandle = <0x0e>;
+			linux,phandle = <0x0e>;
+
+			pcie {
+				ralink,group = "pcie";
+				ralink,function = "pcie rst";
+			};
+		};
+
+		rgmii2 {
+
+			rgmii2 {
+				ralink,group = "rgmii2";
+				ralink,function = "rgmii2";
+			};
+		};
+
+		i2c_pins {
+			phandle = <0x04>;
+			linux,phandle = <0x04>;
+
+			i2c_pins {
+				ralink,group = "i2c";
+				ralink,function = "i2c";
+			};
+		};
+
+		uart3 {
+			phandle = <0x07>;
+			linux,phandle = <0x07>;
+
+			uart3 {
+				ralink,group = "uart3";
+				ralink,function = "uart3";
+			};
+		};
+
+		uart1 {
+
+			uart1 {
+				ralink,group = "uart1";
+				ralink,function = "uart1";
+			};
+		};
+	};
+};
