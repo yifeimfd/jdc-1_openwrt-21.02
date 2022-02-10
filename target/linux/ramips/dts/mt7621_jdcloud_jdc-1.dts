@@ -1,8 +1,8 @@
 /dts-v1/;
 
 / {
-	compatible = "jdcloud,re-sp-01b\0mediatek,mt7621-soc";
-	model = "JDCloud RE-SP-01B";
+	compatible = "jdcloud,jdc-1", "mediatek,mt7621-soc";
+        model = "JDCloud JDC-1";
 	#address-cells = <0x01>;
 	#size-cells = <0x01>;
 
