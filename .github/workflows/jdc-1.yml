@@ -106,8 +106,8 @@ jobs:
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
         ls -alr openwrt/bin/targets/
-        cp openwrt/.config  openwrt/bin/targets/x86/64/config.txt
-        tar -czf bin.tar.gz openwrt/bin && cp -vf bin.tar.gz openwrt/bin/targets/x86/64
+        cp openwrt/.config  openwrt/bin/targets/ramips/mt7621/config.txt
+        tar -czf bin.tar.gz openwrt/bin && cp -vf bin.tar.gz openwrt/bin/targets/ramips/mt7621
         cd openwrt/bin/targets/*/*
         rm -rf packages *rootfs* *vmlinuz *info *fest
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
