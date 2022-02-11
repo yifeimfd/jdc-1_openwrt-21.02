@@ -73,12 +73,15 @@ jobs:
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
         
+    - name: SSH连接
+      uses: yifeimfd/debugger-action@master
+      if: env.SSH_ACTIONS == 'true'
+        
     - name: 固件编译
       id: compile
       run: |
         cd openwrt
         echo -e "$(nproc) thread compile"
-        make -j$(nproc) || make -j1 V=s
         echo "::set-output name=status::success"
         echo "======================="
         echo "Space usage:"
@@ -89,10 +92,6 @@ jobs:
         du -h --max-depth=1 ./build_dir
         du -h --max-depth=1 ./bin
         cp -f .config ./bin/targets/*/*/
-        
-    - name: SSH连接
-      uses: yifeimfd/debugger-action@master
-      if: env.SSH_ACTIONS == 'true'
         
     - name: 上传bin
       uses: actions/upload-artifact@master
