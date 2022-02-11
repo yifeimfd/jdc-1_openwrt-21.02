@@ -26,7 +26,7 @@ env:
   REPO_BRANCH: openwrt-21.02
   CONFIG_FILE: config-21.02.jdc-1
   DIY_SH: diy-x86-Lienol.sh
-  SSH_ACTIONS:  false
+  SSH_ACTIONS:  true
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
   TZ: Asia/Shanghai
@@ -65,10 +65,6 @@ jobs:
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         
-    - name: SSH连接
-      uses: yifeimfd/debugger-action@master
-      if: env.SSH_ACTIONS == 'true'
-        
     - name: 下载软件包
       id: package
       run: |
@@ -76,6 +72,10 @@ jobs:
         make defconfig && make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
+        
+    - name: SSH连接
+      uses: yifeimfd/debugger-action@master
+      if: env.SSH_ACTIONS == 'true'
         
     - name: 固件编译
       id: compile
