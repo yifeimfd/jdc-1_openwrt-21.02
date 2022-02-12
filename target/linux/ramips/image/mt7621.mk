@@ -782,6 +782,8 @@ endef
 TARGET_DEVICES += jcg_y2
 
 define Device/jdcloud_re-sp-01b
+  $(Device/dsa-migration)
+  $(Device/uimage-lzma-loader)
   IMAGE_SIZE := 27328k
   DEVICE_VENDOR := JDCloud
   DEVICE_MODEL := RE-SP-01B
