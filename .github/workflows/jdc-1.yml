@@ -106,6 +106,7 @@ jobs:
       run: |
         ls -alr openwrt/bin/targets/
         cp openwrt/.config  openwrt/bin/targets/ramips/mt7621/config.txt
+        cp openwrt/target/linux/ramips/image/mt7621.mk openwrt/bin/targets/ramips/mt7621/mt7621.mk
         tar -czf bin.tar.gz openwrt/bin && cp -vf bin.tar.gz openwrt/bin/targets/ramips/mt7621
         cd openwrt/bin/targets/*/*
         rm -rf packages *rootfs* *vmlinuz *info *fest
