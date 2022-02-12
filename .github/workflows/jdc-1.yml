@@ -22,10 +22,9 @@ on:
      types: started
   
 env:
-  REPO_URL: https://github.com/openwrt/openwrt
+  REPO_URL: https://github.com/yifeimfd/openwrt
   REPO_BRANCH: openwrt-21.02
   CONFIG_FILE: config-21.02.jdc-1
-  DIY_SH: diy-x86-Lienol.sh
   SSH_ACTIONS:  false
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
@@ -58,7 +57,6 @@ jobs:
       run: |
         git clone https://github.com/yifeimfd/Actions-OpenWrt-en_ssh ./openwrt/diy/yifeimfd
         mv ./openwrt/diy/yifeimfd/diy/$CONFIG_FILE $(pwd)
-        mv ./openwrt/diy/yifeimfd/diy/$DIY_SH $(pwd)
         cp -a ./openwrt/diy/yifeimfd/target openwrt
         grep -irl jdc openwrt/target
         df -h && pwd
