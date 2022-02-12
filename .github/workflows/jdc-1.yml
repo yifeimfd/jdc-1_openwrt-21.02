@@ -55,7 +55,7 @@ jobs:
    
     - name: 导入自定义
       run: |
-        git clone https://github.com/yifeimfd/Actions-OpenWrt-en_ssh ./openwrt/diy/yifeimfd
+        git clone https://github.com/yifeimfd/jdc-1_openwrt-21.02 ./openwrt/diy/yifeimfd
         mv ./openwrt/diy/yifeimfd/diy/$CONFIG_FILE $(pwd)
         cp -a ./openwrt/diy/yifeimfd/target openwrt
         rm -rf ./openwrt/target/linux/ramips/dts/mt7621_jdcloud_jdc*
