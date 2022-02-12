@@ -105,7 +105,8 @@ CONFIG_TARGET_ramips_mt7621=y
 # CONFIG_TARGET_ramips_mt7621_DEVICE_jcg_jhr-ac876m is not set
 # CONFIG_TARGET_ramips_mt7621_DEVICE_jcg_q20 is not set
 # CONFIG_TARGET_ramips_mt7621_DEVICE_jcg_y2 is not set
-CONFIG_TARGET_ramips_mt7621_DEVICE_jdcloud_jdc-1=y
+# CONFIG_TARGET_ramips_mt7621_DEVICE_jdcloud_jdc-1 is not set
+CONFIG_TARGET_ramips_mt7621_DEVICE_jdcloud_re-sp-01b=y
 # CONFIG_TARGET_ramips_mt7621_DEVICE_lenovo_newifi-d1 is not set
 # CONFIG_TARGET_ramips_mt7621_DEVICE_linksys_e5600 is not set
 # CONFIG_TARGET_ramips_mt7621_DEVICE_linksys_ea7300-v1 is not set
@@ -181,7 +182,7 @@ CONFIG_HAS_SUBTARGETS=y
 CONFIG_HAS_DEVICES=y
 CONFIG_TARGET_BOARD="ramips"
 CONFIG_TARGET_SUBTARGET="mt7621"
-CONFIG_TARGET_PROFILE="DEVICE_jdcloud_jdc-1"
+CONFIG_TARGET_PROFILE="DEVICE_jdcloud_re-sp-01b"
 CONFIG_TARGET_ARCH_PACKAGES="mipsel_24kc"
 CONFIG_DEFAULT_TARGET_OPTIMIZATION="-Os -pipe -mno-branch-likely -mips32r2 -mtune=24kc"
 CONFIG_CPU_TYPE="24kc"
