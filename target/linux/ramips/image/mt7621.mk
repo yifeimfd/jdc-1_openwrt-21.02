@@ -791,15 +791,6 @@ define Device/jdcloud_re-sp-01b
 endef
 TARGET_DEVICES += jdcloud_re-sp-01b
 
-define Device/jdcloud_jdc-1
-  $(Device/dsa-migration)
-  DEVICE_VENDOR := JDCloud
-  DEVICE_MODEL := JDC-1
-  IMAGE_SIZE := 27264k
-  DEVICE_PACKAGES += kmod-mt7603 kmod-mt7615e kmod-mt7615-firmware kmod-usb3
-endef
-TARGET_DEVICES += jdcloud_jdc-1
-
 define Device/lenovo_newifi-d1
   $(Device/dsa-migration)
   $(Device/uimage-lzma-loader)
