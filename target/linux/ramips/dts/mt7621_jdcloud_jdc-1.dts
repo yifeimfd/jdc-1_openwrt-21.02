@@ -107,6 +107,7 @@
 &pcie0 {
         mt76@0,0 {
                 reg = <0x0000 0 0 0 0>;
+                mtd-mac-address-ascii = <0x0d 0x4429>;
                 mediatek,mtd-eeprom = <&factory 0x0000>;
                 ieee80211-freq-limit = <2400000 2500000>;
         };
@@ -115,9 +116,20 @@
 &pcie1 {
         mt76@0,0 {
                 reg = <0x0000 0 0 0 0>;
+                mtd-mac-address-ascii = <0x0d 0x4429>;
+                mtd-mac-address-increment-byte = <0x03>;
+                mtd-mac-address-increment = <0x80>;
                 mediatek,mtd-eeprom = <&factory 0x8000>;
                 ieee80211-freq-limit = <5000000 6000000>;
         };
+};
+
+&pcie2 {
+        status = "okay";
+};
+
+&gmac0 {
+        mtd-mac-address = <&config 0x4429>;
 };
 
 &switch0 {
@@ -135,7 +147,7 @@
                 port@4 {
                         status = "okay";
                         label = "wan";
-                        mtd-mac-address = <&factory 0xf100>;
+                        mtd-mac-address = <&config 0x4429>;
                         mtd-mac-address-increment = <1>;
                 };
         };
