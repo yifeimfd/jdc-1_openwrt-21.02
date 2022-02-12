@@ -781,14 +781,13 @@ define Device/jcg_y2
 endef
 TARGET_DEVICES += jcg_y2
 
-define Device/jdcloud_jdc-1
-  $(Device/dsa-migration)
+define Device/jdcloud_re-sp-01b
+  IMAGE_SIZE := 27328k
   DEVICE_VENDOR := JDCloud
-  DEVICE_MODEL := JDC-1
-  IMAGE_SIZE := 27264k
-  DEVICE_PACKAGES += kmod-mt7603 kmod-mt7615e kmod-mt7615-firmware kmod-usb3
+  DEVICE_MODEL := RE-SP-01B
+  DEVICE_PACKAGES := kmod-fs-ext4 kmod-mt7603 kmod-mt7615e kmod-sdhci-mt7620 kmod-usb3 wpad-openssl
 endef
-TARGET_DEVICES += jdcloud_jdc-1
+TARGET_DEVICES += jdcloud_re-sp-01b
 
 define Device/lenovo_newifi-d1
   $(Device/dsa-migration)
