@@ -55,8 +55,7 @@ jobs:
    
     - name: 导入自定义
       run: |
-        ls -alr *
-        mv diy/$CONFIG_FILE openwrt/
+        mv diy/$CONFIG_FILE .
         cp -a target openwrt/
         rm -rf ./openwrt/target/linux/ramips/dts/mt7621_jdcloud_jdc*
         grep -irl jdc openwrt/target
