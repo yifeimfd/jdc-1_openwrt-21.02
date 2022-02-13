@@ -22,9 +22,9 @@ on:
      types: started
   
 env:
-  REPO_URL: https://github.com/yifeimfd/openwrt
+  REPO_URL: https://github.com/openwrt/openwrt
   REPO_BRANCH: master
-  CONFIG_FILE: config-21.02.jdc-1
+  CONFIG_FILE: config-21.02.jdc-1b
   SSH_ACTIONS:  false
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
