@@ -71,11 +71,12 @@ jobs:
       id: package
       run: |
         cd openwrt && ./scripts/feeds clean && ./scripts/feeds update -a && ./scripts/feeds install -a
-        make defconfig && make download -j8
+        mkdir mfdconf
+        cp -a .config mfdconf/config.txt1
+        make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-        mkdir mfdconf
-        cp -a .config mfdconf/config.txt
+        cp -a .config mfdconf/config.txt2
         
     - name: 上传config
       uses: actions/upload-artifact@master
