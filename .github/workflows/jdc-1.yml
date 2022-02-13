@@ -23,7 +23,7 @@ on:
   
 env:
   REPO_URL: https://github.com/yifeimfd/openwrt
-  REPO_BRANCH: openwrt-21.02
+  REPO_BRANCH: master
   CONFIG_FILE: config-21.02.jdc-1
   SSH_ACTIONS:  false
   UPLOAD_BIN_DIR: true
