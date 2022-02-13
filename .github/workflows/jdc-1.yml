@@ -75,6 +75,12 @@ jobs:
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
         
+    - name: 上传config
+      uses: actions/upload-artifact@master
+      with:
+        name: .config
+        path: openwrt/
+        
     - name: 固件编译
       id: compile
       run: |
