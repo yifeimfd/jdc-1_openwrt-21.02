@@ -26,6 +26,7 @@ env:
   REPO_BRANCH: master
   CONFIG_FILE: jdcloud_re-sp-01b.config
   SSH_ACTIONS:  false
+  UPLOAD_CONFIG: false
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
   TZ: Asia/Shanghai
@@ -86,6 +87,7 @@ jobs:
         
     - name: 上传config
       uses: actions/upload-artifact@master
+      if: env.UPLOAD_CONFIG == 'true'
       with:
         name: config.txt
         path: openwrt/mfdconf
