@@ -53,7 +53,6 @@ jobs:
     - name: 下载源码
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
-        cd openwrt && ./scripts/feeds clean && ./scripts/feeds update -a && ./scripts/feeds install -a && cd ..
    
     - name: 导入自定义
       run: |
@@ -75,10 +74,12 @@ jobs:
         cd openwrt
         mkdir mfdconf
         cp -a .config mfdconf/config.txt1
+        ./scripts/feeds clean && ./scripts/feeds update -a && ./scripts/feeds install -a
+        cp -a .config mfdconf/config.txt2
         make defconfig && make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-        cp -a .config mfdconf/config.txt2
+        cp -a .config mfdconf/config.txt3
         
     - name: 上传config
       uses: actions/upload-artifact@master
