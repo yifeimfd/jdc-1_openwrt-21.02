@@ -26,9 +26,10 @@ env:
   REPO_BRANCH: master
   CONFIG_FILE: jdcloud_re-sp-01b.config
   SSH_ACTIONS:  false
-  UPLOAD_CONFIG: false
-  UPLOAD_BIN_DIR: true
+  UPLOAD_CONFIG: true
+  UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
+  UPLOAD_FIRMWARE1: true
   TZ: Asia/Shanghai
 
 jobs:
@@ -124,14 +125,25 @@ jobs:
         cp openwrt/.config  openwrt/bin/targets/ramips/mt7621/config.txt
         cp openwrt/target/linux/ramips/image/mt7621.mk openwrt/bin/targets/ramips/mt7621/mt7621.mk
         tar -czf bin.tar.gz openwrt/bin && cp -vf bin.tar.gz openwrt/bin/targets/ramips/mt7621
-        cd openwrt/bin/targets/*/*
+        mkdir openwrt/mfdfw
+        cp openwrt/bin/targets/ramips/mt7621/*squashfs-sysupgrade.bin openwrt/mfdfw/
+        cd openwrt/mfdfw/
+        echo "FIRMWARE1=$PWD" >> $GITHUB_ENV
+        cd ../../openwrt/bin/targets/*/*
         rm -rf packages *rootfs* *vmlinuz *info *fest bin.tar.gz openwrt-ramips-mt7621-jdcloud_re-sp-01b-initramfs-kernel.bin
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
 
-    - name: 上传固件
+    - name: 上传固件包
       uses: actions/upload-artifact@master
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: OpenWrt-jdc-21.02
         path: ${{ env.FIRMWARE }}
+        
+    - name: 上传刷机固件
+      uses: actions/upload-artifact@master
+      if: steps.organize.outputs.status == 'success' && !cancelled()
+      with:
+        name: OpenWrt-jdc-21.02-mfdfw
+        path: ${{ env.FIRMWARE1 }}
