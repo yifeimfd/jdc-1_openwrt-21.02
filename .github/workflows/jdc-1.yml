@@ -142,8 +142,17 @@ jobs:
         path: ${{ env.FIRMWARE }}
         
     - name: 上传刷机固件
-      uses: actions/upload-artifact@master
-      if: steps.organize.outputs.status == 'success' && !cancelled()
+      uses: svenstaro/upload-release-action@v1-release
       with:
-        name: OpenWrt-jdc-21.02-mfdfw
-        path: ${{ env.FIRMWARE1 }}
+        repo_token: ${{ secrets.REPO_TOKEN }}
+        file: ${{ env.FIRMWARE }}/*squashfs-sysupgrade.bin
+        tag: AtuoBuild
+        overwrite: true
+        file_glob: true
+    - uses: ncipollo/release-action@v1
+      with:
+       bodyFile: "changelog.md"
+       tag: AtuoBuild
+       allowUpdates: true
+       name: 京东云无线宝一代固件
+       token: ${{ secrets.REPO_TOKEN }}
