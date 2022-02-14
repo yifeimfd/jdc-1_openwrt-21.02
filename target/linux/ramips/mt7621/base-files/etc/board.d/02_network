@@ -41,7 +41,7 @@ ramips_setup_interfaces()
 	glinet,gl-mt1300|\
 	jcg,q20|\
 	lenovo,newifi-d1|\
-  jdcloud,re-sp-01b|\
+  	jdcloud,re-sp-01b|\
 	mikrotik,routerboard-m33g|\
 	xiaomi,mi-router-3g|\
 	xiaomi,mi-router-3g-v2|\
