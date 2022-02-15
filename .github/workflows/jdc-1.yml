@@ -59,6 +59,7 @@ jobs:
     - name: 导入自定义
       run: |
         cp -a target openwrt/
+        chmod 755 openwrt/target/linux/ramips/mt7621/base-files/etc/board.d/02_network 
         rm -rf ./openwrt/target/linux/ramips/dts/mt7621_jdcloud_jdc*
         grep -irl jdc openwrt/target
         df -h && pwd
