@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: GPL-2.0-or-later OR MIT
-/dts-v1/;
 
 #include "mt7621.dtsi"
 
@@ -22,16 +21,6 @@
 		bootargs = "console=ttyS0,115200";
 	};
 
-	keys {
-		compatible = "gpio-keys";
-
-		reset {
-			label = "reset";
-			gpios = <&gpio 18 GPIO_ACTIVE_LOW>;
-			linux,code = <KEY_RESTART>;
-		};
-	};
-
 	leds {
 		compatible = "gpio-leds";
 
@@ -49,6 +38,17 @@
 		led_blue: blue {
 			label = "jdcloud:blue:sys";
 			gpios = <&gpio 12 GPIO_ACTIVE_LOW>;
+		};
+	};
+
+	keys {
+		compatible = "gpio-keys";
+
+		reset {
+			label = "reset";
+			gpios = <&gpio 18 GPIO_ACTIVE_LOW>;
+			debounce-interval = <60>;
+			linux,code = <KEY_RESTART>;
 		};
 	};
 };
@@ -91,26 +91,37 @@
 			partition@50000 {
 				compatible = "denx,uimage";
 				label = "firmware";
-				reg = <0x50000 0x1ab0000>;
-			};
-
-			partition@1b00000 {
-				label = "mini";
-				reg = <0x1b00000 0x400000>;
-				read-only;
-			};
-
-			partition@1f00000 {
-				label = "oem";
-				reg = <0x1f00000 0x100000>;
-				read-only;
+				reg = <0x50000 0x1fb0000>;
 			};
 		};
 	};
 };
 
+&pcie {
+	status = "okay";
+};
+
+&pcie0 {
+	wifi@0,0 {
+		compatible = "mediatek,mt76";
+		reg = <0x0000 0 0 0 0>;
+		mediatek,mtd-eeprom = <&factory 0x0000>;
+		ieee80211-freq-limit = <2400000 2500000>;
+	};
+};
+
+&pcie1 {
+	wifi@0,0 {
+		compatible = "mediatek,mt76";
+		reg = <0x0000 0 0 0 0>;
+		mediatek,mtd-eeprom = <&factory 0x8000>;
+		ieee80211-freq-limit = <5000000 6000000>;
+	};
+};
+
 &gmac0 {
-	mtd-mac-address-ascii = <&config 0x4429>;
+	nvmem-cells = <&macaddr_factory_e00c>;
+	nvmem-cell-names = "mac-address";
 };
 
 &switch0 {
@@ -118,6 +129,9 @@
 		port@0 {
 			status = "okay";
 			label = "wan";
+			nvmem-cells = <&macaddr_factory_e00c>;
+			nvmem-cell-names = "mac-address";
+			mac-address-increment = <1>;
 		};
 
 		port@1 {
@@ -132,32 +146,19 @@
 	};
 };
 
-&pcie {
-	status = "okay";
-};
-
-&pcie0 {
-	wifi@0,0 {
-		reg = <0x0000 0 0 0 0>;
-		mtd-mac-address-ascii = <&config 0x4429>;
-		mediatek,mtd-eeprom = <&factory 0x0>;
-	};
-};
-
-&pcie1 {
-	wifi@0,0 {
-		reg = <0x0000 0 0 0 0>;
-		mtd-mac-address-ascii = <&config 0x4429>;
-		mtd-mac-address-increment = <0x80>;
-		mtd-mac-address-increment-byte = <3>;
-		mediatek,mtd-eeprom = <&factory 0x8000>;
-		ieee80211-freq-limit = <5000000 6000000>;
-	};
-};
-
 &state_default {
 	gpio {
 		groups = "uart2", "uart3", "wdt";
 		function = "gpio";
+	};
+};
+
+&factory {
+	compatible = "nvmem-cells";
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	macaddr_factory_e00c: macaddr@e00c {
+		reg = <0xe00c 0x6>;
 	};
 };
