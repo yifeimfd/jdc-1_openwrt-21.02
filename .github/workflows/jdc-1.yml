@@ -24,7 +24,7 @@ on:
 env:
   REPO_URL: https://github.com/openwrt/openwrt
   REPO_BRANCH: openwrt-21.02
-  CONFIG_FILE: jdcloud_re-sp-01b.config
+  CONFIG_FILE: adslr.config
   UPLOAD_CONFIG: true
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
@@ -120,6 +120,8 @@ jobs:
         cp openwrt/target/linux/ramips/image/mt7621.mk openwrt/bin/targets/ramips/mt7621/mt7621.mk
         tar -czf bin.tar.gz openwrt/bin && cp -vf bin.tar.gz openwrt/bin/targets/ramips/mt7621
         mkdir openwrt/mfdfw
+        cp openwrt/.config openwrt/mfdfw
+        cp openwrt/target/linux/ramips/image/mt7621.mk openwrt/mfdfw/
         cp openwrt/bin/targets/ramips/mt7621/*squashfs-sysupgrade.bin openwrt/mfdfw/
         cd openwrt/mfdfw/
         echo "FIRMWARE1=$PWD" >> $GITHUB_ENV
@@ -133,5 +135,5 @@ jobs:
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: OpenWrt-jdc-21.02
-        path: ${{ env.FIRMWARE }}
+        path: ${{ env.FIRMWARE1 }}
 
