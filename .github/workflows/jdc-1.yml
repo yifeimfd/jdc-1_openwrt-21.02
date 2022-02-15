@@ -73,7 +73,7 @@ jobs:
         cd openwrt
         mkdir mfdconf
         ./scripts/feeds clean && ./scripts/feeds update -a && ./scripts/feeds install -a
-        mv ../diy/$CONFIG_FILE .
+        cp ../diy/$CONFIG_FILE .config
         echo '22222222' && grep jdc .config
         cp -a .config mfdconf/config.txt2
         make defconfig && make download -j8
