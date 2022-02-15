@@ -25,7 +25,6 @@ env:
   REPO_URL: https://github.com/openwrt/openwrt
   REPO_BRANCH: openwrt-21.02
   CONFIG_FILE: jdcloud_re-sp-01b.config
-  SSH_ACTIONS:  false
   UPLOAD_CONFIG: true
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
@@ -63,10 +62,6 @@ jobs:
         rm -rf ./openwrt/target/linux/ramips/dts/mt7621_jdcloud_jdc*
         grep -irl jdc openwrt/target
         df -h && pwd
-
-    - name: SSH连接
-      uses: yifeimfd/debugger-action@master
-      if: env.SSH_ACTIONS == 'true'
         
     - name: 下载软件包
       id: package
@@ -139,19 +134,4 @@ jobs:
       with:
         name: OpenWrt-jdc-21.02
         path: ${{ env.FIRMWARE }}
-        
-    - name: 上传刷机固件
-      uses: svenstaro/upload-release-action@v1-release
-      with:
-        repo_token: ${{ secrets.REPO_TOKEN }}
-        file: ${{ env.FIRMWARE }}/openwrt-ramips-mt7621-jdcloud_re-sp-01b-squashfs-sysupgrade.bin
-        tag: AtuoBuild
-        overwrite: true
-        file_glob: true
-    - uses: ncipollo/release-action@v1
-      with:
-       bodyFile: "changelog.md"
-       tag: AtuoBuild
-       allowUpdates: true
-       name: 京东云无线宝一代固件
-       token: ${{ secrets.REPO_TOKEN }}
+
