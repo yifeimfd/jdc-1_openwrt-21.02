@@ -141,7 +141,7 @@ jobs:
       uses: svenstaro/upload-release-action@v1-release
       with:
         repo_token: ${{ secrets.REPO_TOKEN }}
-        file: ${{ env.FIRMWARE }}/*squashfs-sysupgrade.bin
+        file: ${{ env.FIRMWARE }}/openwrt-ramips-mt7621-jdcloud_re-sp-01b-squashfs-sysupgrade.bin
         tag: AtuoBuild
         overwrite: true
         file_glob: true
