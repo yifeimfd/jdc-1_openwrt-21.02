@@ -24,7 +24,7 @@ on:
 env:
   REPO_URL: https://github.com/openwrt/openwrt
   REPO_BRANCH: openwrt-21.02
-  CONFIG_FILE: adslr.config
+  CONFIG_FILE: jdcloud_re-sp-01b.config
   UPLOAD_CONFIG: true
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
