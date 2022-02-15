@@ -62,8 +62,6 @@ jobs:
         rm -rf ./openwrt/target/linux/ramips/dts/mt7621_jdcloud_jdc*
         grep -irl jdc openwrt/target
         df -h && pwd
-        [ -e files ] && mv files openwrt/files
-        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
 
     - name: SSH连接
       uses: yifeimfd/debugger-action@master
@@ -75,7 +73,7 @@ jobs:
         cd openwrt
         mkdir mfdconf
         ./scripts/feeds clean && ./scripts/feeds update -a && ./scripts/feeds install -a
-        mv diy/$CONFIG_FILE .
+        mv ../diy/$CONFIG_FILE .
         echo '22222222' && grep jdc .config
         cp -a .config mfdconf/config.txt2
         make defconfig && make download -j8
