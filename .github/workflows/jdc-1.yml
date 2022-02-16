@@ -60,8 +60,8 @@ jobs:
       run: |
         cd openwrt
         df -h && pwd
-        chmod +x diy/$DIY_SH && cd openwrt && ../diy/$DIY_SH
-        grep -irl jdc openwrt/target
+        chmod +x ../diy/$DIY_SH && ../diy/$DIY_SH
+        grep -irl jdc target
         
     - name: 下载软件包
       id: package
