@@ -58,6 +58,7 @@ jobs:
    
     - name: 导入自定义
       run: |
+        cp target/linux/ramips/dts/mt7621_jdcloud_re-sp-01b.dts openwrt/target/linux/ramips/dts/
         cd openwrt
         df -h && pwd
         chmod +x ../diy/$DIY_SH && ../diy/$DIY_SH
@@ -68,6 +69,7 @@ jobs:
       id: package
       run: |
         pwd
+        cd openwrt
         mkdir mfdconf
         ls -al
         ./scripts/feeds clean && ./scripts/feeds update -a && ./scripts/feeds install -a
