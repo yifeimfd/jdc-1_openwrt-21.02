@@ -67,6 +67,7 @@ jobs:
     - name: 下载软件包
       id: package
       run: |
+        pwd
         mkdir mfdconf
         ls -al
         ./scripts/feeds clean && ./scripts/feeds update -a && ./scripts/feeds install -a
