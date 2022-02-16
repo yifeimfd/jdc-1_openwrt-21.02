@@ -10,3 +10,7 @@ block-mount
 parted
 usbutils
 kmod-usb-storage
+
+=====================================
+修改配置
+ttyd免验证
