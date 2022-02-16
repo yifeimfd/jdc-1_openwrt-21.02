@@ -25,6 +25,7 @@ env:
   REPO_URL: https://github.com/openwrt/openwrt
   REPO_BRANCH: openwrt-21.02
   CONFIG_FILE: jdcloud_re-sp-01b.config
+  DIY_SH: diy-jdc.sh
   UPLOAD_CONFIG: true
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
@@ -57,20 +58,17 @@ jobs:
    
     - name: 导入自定义
       run: |
-        cp -a target openwrt/
-        chmod 755 openwrt/target/linux/ramips/mt7621/base-files/etc/board.d/02_network 
-        rm -rf ./openwrt/target/linux/ramips/dts/mt7621_jdcloud_jdc*
-        grep -irl jdc openwrt/target
+        cd openwrt
         df -h && pwd
+        chmod +x diy/$DIY_SH && cd openwrt && ../diy/$DIY_SH
+        grep -irl jdc openwrt/target
         
     - name: 下载软件包
       id: package
       run: |
-        cd openwrt
         mkdir mfdconf
         ./scripts/feeds clean && ./scripts/feeds update -a && ./scripts/feeds install -a
         cp ../diy/$CONFIG_FILE .config
-        cp ../diy/openwrt_release package/base-files/files/etc/openwrt_release
         echo '22222222' && grep jdc .config
         cat package/base-files/files/etc/openwrt_release
         cp -a .config mfdconf/config.txt2
