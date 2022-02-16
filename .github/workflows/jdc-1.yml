@@ -68,7 +68,10 @@ jobs:
       id: package
       run: |
         mkdir mfdconf
+        ls -al
         ./scripts/feeds clean && ./scripts/feeds update -a && ./scripts/feeds install -a
+        pwd
+        ls -al
         cp $CONFIG_FILE .config
         echo '22222222' && grep jdc .config
         cat package/base-files/files/etc/openwrt_release
