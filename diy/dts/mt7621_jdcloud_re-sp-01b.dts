@@ -134,12 +134,12 @@
 			mac-address-increment = <1>;
 		};
 
-		port@3 {
+		port@1 {
 			status = "okay";
 			label = "lan1";
 		};
 
-		port@4 {
+		port@2 {
 			status = "okay";
 			label = "lan2";
 		};
