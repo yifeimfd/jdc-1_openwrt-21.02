@@ -9,21 +9,17 @@ sed -i '/lenovo,newifi-d1|\\/i\        jdcloud,re-sp-01b|\\' target/linux/ramips
 # echo '修改网关地址'
 # sed -i 's/192.168.1.1/192.168.5.1/g' package/base-files/files/bin/config_generate
 
-echo '修改时区'
-sed -i "s/'UTC'/'CST-8'\n        set system.@system[-1].zonename='Asia\/Shanghai'/g" package/base-files/files/bin/config_generate
+# echo '修改时区'
+# sed -i "s/'UTC'/'CST-8'\n        set system.@system[-1].zonename='Asia\/Shanghai'/g" package/base-files/files/bin/config_generate
 
-echo '修改机器名称'
-sed -i 's/OpenWrt/OpenWrt-JDCloud RE-SP-01B/g' package/base-files/files/bin/config_generate
+# echo '修改机器名称'
+# sed -i 's/OpenWrt/OpenWrt-JDCloud RE-SP-01B/g' package/base-files/files/bin/config_generate
 
 echo '默认开启wifi'
-sed -i '/option disabled/d' /etc/config/wireless
-sed -i '/set wireless.radio${devidx}.disabled/d' /lib/wifi/mac80211.sh
+sed -i 's/set wireless.radio${devidx}.disabled=1/set wireless.radio${devidx}.disabled=0/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
 
 echo '修改版本显示'
-sed -i '/DISTRIB_REVISION/d' /etc/openwrt_release
-echo "DISTRIB_REVISION='Compiled by YifeiMfd'" >> /etc/openwrt_release
-sed -i '/DISTRIB_DESCRIPTION/d' /etc/openwrt_release
-echo "DISTRIB_DESCRIPTION='OpenWrt '" >> /etc/openwrt_release
+sed -i "s/%D %V %C'/%D %V %C Compiled by YifeiMfd'/g" package/base-files/files/etc/openwrt_release
 
 echo '删除临时文件'
 rm -rf /tmp/luci-modulecache/
