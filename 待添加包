@@ -1,4 +1,12 @@
+-
+atftp
+atftpd
+
+=====================================
++
 e2fsporgs
 fdisk
 block-mount
 parted
+usbutils
+kmod-usb-storage
