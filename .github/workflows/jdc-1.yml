@@ -61,6 +61,7 @@ jobs:
         cd openwrt
         df -h && pwd
         chmod +x ../diy/$DIY_SH && ../diy/$DIY_SH
+        mv ../diy/$CONFIG_FILE .
         grep -irl jdc target
         
     - name: 下载软件包
@@ -68,7 +69,7 @@ jobs:
       run: |
         mkdir mfdconf
         ./scripts/feeds clean && ./scripts/feeds update -a && ./scripts/feeds install -a
-        cp ../diy/$CONFIG_FILE .config
+        cp $CONFIG_FILE .config
         echo '22222222' && grep jdc .config
         cat package/base-files/files/etc/openwrt_release
         cp -a .config mfdconf/config.txt2
