@@ -25,6 +25,7 @@ env:
   REPO_URL: https://github.com/openwrt/openwrt
   REPO_BRANCH: openwrt-21.02
   CONFIG_FILE: jdcloud_re-sp-01b.config
+  DTS_FILE: mt7621_jdcloud_re-sp-01b.dts
   DIY_SH: diy-jdc.sh
   UPLOAD_CONFIG: true
   UPLOAD_BIN_DIR: false
@@ -58,7 +59,7 @@ jobs:
    
     - name: 导入自定义
       run: |
-        cp target/linux/ramips/dts/mt7621_jdcloud_re-sp-01b.dts openwrt/target/linux/ramips/dts/
+        cp diy/dts/$DTS_FILE openwrt/target/linux/ramips/dts/
         cd openwrt
         df -h && pwd
         chmod +x ../diy/$DIY_SH && ../diy/$DIY_SH
