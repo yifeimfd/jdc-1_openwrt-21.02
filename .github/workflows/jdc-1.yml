@@ -56,6 +56,7 @@ jobs:
     - name: 下载源码
       run: |
         git clone $REPO_URL openwrt
+        git tag
         git checkout v21.02.1
    
     - name: 导入自定义
