@@ -1,0 +1,146 @@
+#=================================================
+# https://github.com/P3TERX/Actions-OpenWrt
+# Description: Build OpenWrt using GitHub Actions
+# Lisence: MIT
+# Author: P3TERX
+# Blog: https://p3terx.com
+#=================================================
+
+name: jdc-1_openwrt-21.02.1-nomod
+
+on:
+# release:
+#   types: published
+# push:
+#   branches:
+#     - openwrt-21.02
+#   paths:
+#     - 'Lean'
+#   schedule:
+#     - cron: 0 18 * * 1
+   watch:
+     types: started
+  
+env:
+  REPO_URL: https://github.com/openwrt/openwrt
+  REPO_BRANCH: openwrt-21.02.1
+  CONFIG_FILE: jdc-op21.02.1.config
+  DTS_FILE: mt7621_jdcloud_re-sp-01b.dts
+  DIY_SH: diy-jdc-nomod.sh
+  UPLOAD_CONFIG: true
+  UPLOAD_BIN_DIR: false
+  UPLOAD_FIRMWARE: true
+  UPLOAD_FIRMWARE1: true
+  TZ: Asia/Shanghai
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    if: github.event.repository.owner.id == github.event.sender.id
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: 初始环境
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+          sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
+          sudo -E apt-get -qq update
+          sudo -E apt-get -qq install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget curl swig rsync
+          sudo ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+          sudo -E apt-get -qq autoremove --purge
+          sudo -E apt-get -qq clean
+        
+    - name: 下载源码
+      run: |
+        git clone $REPO_URL openwrt
+        cd openwrt
+        git tag
+        git checkout v21.02.1
+   
+    - name: 导入自定义
+      run: |
+        cp diy/dts/$DTS_FILE openwrt/target/linux/ramips/dts/
+        cd openwrt
+        df -h && pwd
+        chmod +x ../diy/$DIY_SH && ../diy/$DIY_SH
+        mv ../diy/$CONFIG_FILE .
+        grep -irl jdc target
+        
+    - name: 下载软件包
+      id: package
+      run: |
+        pwd
+        cd openwrt
+        mkdir mfdconf
+        ls -al
+        ./scripts/feeds clean && ./scripts/feeds update -a && ./scripts/feeds install -a
+        pwd
+        ls -al
+        cp $CONFIG_FILE .config
+        echo '22222222' && grep jdc .config
+        cat package/base-files/files/etc/openwrt_release
+        cp -a .config mfdconf/config.txt2
+        make defconfig && make download -j8
+        echo '33333333' && grep jdc .config
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
+        cp -a .config mfdconf/config.txt3
+        
+    - name: 上传config
+      uses: actions/upload-artifact@master
+      if: env.UPLOAD_CONFIG == 'true'
+      with:
+        name: config.txt
+        path: openwrt/mfdconf
+        
+    - name: 固件编译
+      id: compile
+      run: |
+        cd openwrt
+        echo -e "$(nproc) thread compile"
+        make -j$(nproc) || make -j1 V=s
+        echo "::set-output name=status::success"
+        echo "======================="
+        echo "Space usage:"
+        echo "======================="
+        df -h
+        echo "======================="
+        du -h --max-depth=1 ./ --exclude=build_dir --exclude=bin
+        du -h --max-depth=1 ./build_dir
+        du -h --max-depth=1 ./bin
+        cp -f .config ./bin/targets/*/*/
+        
+    - name: 上传bin
+      uses: actions/upload-artifact@master
+      if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
+      with:
+        name: OpenWrt_bin-jdc-21.02
+        path: openwrt/bin
+
+    - name: 固件打包
+      id: organize
+      if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      run: |
+        ls -alr openwrt/bin/targets/
+        cp openwrt/.config  openwrt/bin/targets/ramips/mt7621/config.txt
+        cp openwrt/target/linux/ramips/image/mt7621.mk openwrt/bin/targets/ramips/mt7621/mt7621.mk
+        tar -czf bin.tar.gz openwrt/bin && cp -vf bin.tar.gz openwrt/bin/targets/ramips/mt7621
+        mkdir openwrt/mfdfw
+        cp openwrt/.config openwrt/mfdfw
+        cp openwrt/target/linux/ramips/image/mt7621.mk openwrt/mfdfw/
+        cp openwrt/bin/targets/ramips/mt7621/*squashfs-sysupgrade.bin openwrt/mfdfw/
+        cd openwrt/mfdfw/
+        echo "FIRMWARE1=$PWD" >> $GITHUB_ENV
+        cd ../../openwrt/bin/targets/*/*
+        rm -rf packages *rootfs* *vmlinuz *info *fest bin.tar.gz openwrt-ramips-mt7621-jdcloud_re-sp-01b-initramfs-kernel.bin
+        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+        echo "::set-output name=status::success"
+    - name: 上传固件包
+      uses: actions/upload-artifact@master
+      if: steps.organize.outputs.status == 'success' && !cancelled()
+      with:
+        name: OpenWrt-jdc-21.02
+        path: ${{ env.FIRMWARE1 }}
