@@ -23,8 +23,8 @@ on:
   
 env:
   REPO_URL: https://github.com/openwrt/openwrt
-  REPO_BRANCH: openwrt-21.02
-  CONFIG_FILE: jdcloud_re-sp-01b.config
+  REPO_BRANCH: openwrt-21.02.1
+  CONFIG_FILE: jdc-op21.02.1.config
   DTS_FILE: mt7621_jdcloud_re-sp-01b.dts
   DIY_SH: diy-jdc.sh
   UPLOAD_CONFIG: true
