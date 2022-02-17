@@ -25,5 +25,9 @@ echo '删除临时文件'
 rm -rf /tmp/luci-modulecache/
 rm -f /tmp/luci-indexcache
 
+echo '修改kernel指纹'
+sed -i '\/.vermagic/a\        cp $(TOPDIR)\/vermagic $(LINUX_DIR)\/.vermagic' include/kernel-defaults.mk
+sed -i ' STAMP_BUILT:=/a\    STAMP_BUILT:=$(STAMP_BUILT)_$(shell cat $(LINUX_DIR)\/.vermagic)' package/kernel/linux/Makefile
+
 echo '当前路径'
 pwd
