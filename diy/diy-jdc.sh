@@ -27,7 +27,7 @@ rm -f /tmp/luci-indexcache
 
 echo '修改kernel指纹为官方21.02.1版'
 echo 'ecc7515846d9a85938da6124aee98749' > vermagic 
-sed -i '/\/.vermagic/a\        cp $(TOPDIR)\/vermagic $(LINUX_DIR)\/.vermagic' include/kernel-defaults.mk
+sed -i '/\/.vermagic/a\	cp $(TOPDIR)\/vermagic $(LINUX_DIR)\/.vermagic' include/kernel-defaults.mk
 sed -i '/ STAMP_BUILT:=/a\  STAMP_BUILT:=$(STAMP_BUILT)_$(shell cat $(LINUX_DIR)\/.vermagic)' package/kernel/linux/Makefile
 
 echo '当前路径'
