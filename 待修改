@@ -1,6 +1,7 @@
 -
 atftp
 atftpd
+wpad-basic-wolfssl
 
 =====================================
 +
@@ -10,6 +11,7 @@ block-mount
 parted
 usbutils
 kmod-usb-storage
+wpad-mesh-openssl
 
 =====================================
 修改配置
