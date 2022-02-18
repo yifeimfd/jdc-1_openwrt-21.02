@@ -120,7 +120,7 @@
 };
 
 &gmac0 {
-	nvmem-cells = <&macaddr_config_4429>;
+	nvmem-cells = <&config 0x4429>;
 	nvmem-cell-names = "mac-address";
 };
 
@@ -129,7 +129,7 @@
 		port@0 {
 			status = "okay";
 			label = "wan";
-			nvmem-cells = <&macaddr_config_4429>;
+			nvmem-cells = <&config 0x4429>;
 			nvmem-cell-names = "mac-address";
 			mac-address-increment = <1>;
 		};
@@ -150,15 +150,5 @@
 	gpio {
 		groups = "uart2", "uart3", "wdt";
 		function = "gpio";
-	};
-};
-
-&config {
-	compatible = "nvmem-cells";
-	#address-cells = <1>;
-	#size-cells = <1>;
-
-	macaddr_config_4429: macaddr@4429 {
-		reg = <0x0x4429 0x6>;
 	};
 };
