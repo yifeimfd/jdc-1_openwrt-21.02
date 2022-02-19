@@ -6,7 +6,7 @@
 # Blog: https://p3terx.com
 #=================================================
 
-name: jdc-1_openwrt-21.02.1-nomod
+name: jdc-1_openwrt-21.02.2-nomod
 
 on:
 # release:
