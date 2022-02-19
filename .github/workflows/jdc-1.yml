@@ -23,7 +23,7 @@ on:
   
 env:
   REPO_URL: https://github.com/openwrt/openwrt
-  REPO_BRANCH: openwrt-21.02.1
+  REPO_TAG: v21.02.2
   CONFIG_FILE: jdc-op21.02.1.config
   DTS_FILE: mt7621_jdcloud_re-sp-01b.dts
   DIY_SH: diy-jdc.sh
@@ -58,7 +58,7 @@ jobs:
         git clone $REPO_URL openwrt
         cd openwrt
         git tag
-        git checkout v21.02.1
+        git checkout $REPO_TAG
    
     - name: 导入自定义
       run: |
