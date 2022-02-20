@@ -25,5 +25,6 @@ echo '删除临时文件'
 rm -rf /tmp/luci-modulecache/
 rm -f /tmp/luci-indexcache
 
+cp openwrt/target/linux/ramips/dts/mt7621_youhua_wr1200js.dts openwrt/target/linux/ramips/dts/mt7621_jdcloud_re-sp-01b.dts
 echo '当前路径'
 pwd
