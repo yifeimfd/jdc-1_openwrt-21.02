@@ -129,7 +129,7 @@ jobs:
         cp openwrt/.config openwrt/mfdfw
         cp openwrt/target/linux/ramips/image/mt7621.mk openwrt/mfdfw/
         cp openwrt/bin/targets/ramips/mt7621/*squashfs-sysupgrade.bin openwrt/mfdfw/
-        cp openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7621/*.dtb openwrt/mfdfw/
+        cp openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7621/*.dtb openwrt/bin/targets/*/*/
         cd openwrt/mfdfw/
         echo "FIRMWARE1=$PWD" >> $GITHUB_ENV
         cd ../../openwrt/bin/targets/*/*
