@@ -108,6 +108,8 @@
 		compatible = "mediatek,mt76";
 		reg = <0x0000 0 0 0 0>;
 		mediatek,mtd-eeprom = <&factory 0x0000>;
+		nvmem-cells = <&macaddr_config_4429>;
+                nvmem-cell-names = "mac-address";
 		ieee80211-freq-limit = <2400000 2500000>;
 	};
 };
@@ -117,6 +119,10 @@
 		compatible = "mediatek,mt76";
 		reg = <0x0000 0 0 0 0>;
 		mediatek,mtd-eeprom = <&factory 0x8000>;
+		nvmem-cells = <&macaddr_config_4429>;
+                nvmem-cell-names = "mac-address";
+                mac-address-increment = <0x80>;
+                mac-address-increment-byte = <0x03>;
 		ieee80211-freq-limit = <5000000 6000000>;
 	};
 };
